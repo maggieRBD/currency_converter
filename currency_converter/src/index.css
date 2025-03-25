@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #eaecef;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,28 +35,80 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.app-container{
+  margin: 50px auto;
+  max-width: 800px;
+}
+
+.title{
+  color: #000000;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.converter-box{
+  background-color: #522473;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+}
+
+.converter-form{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+input, select{
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 150px;
+}
+
+.convert-button{
+  background-color: #522473;
+  color: white;
+  font-weight: bold;
+  padding: 20px 20px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
 }
-button:hover {
-  border-color: #646cff;
+
+.result-box{
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: inline-block;
+  text-align: left;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+.result{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.calculations{
+  color: gray;
+  font-size: 14px;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #eaecef;
     background-color: #ffffff;
   }
   a:hover {
