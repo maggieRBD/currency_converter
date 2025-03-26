@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -10,6 +10,7 @@ function App() {
   const [convertedAmount, setConvertedAmount] = useState(null);
   const [error, setError] = useState(null);
   const [calculations, setCalculations] = useState(0);
+  const [savedConversions, setSavedConversions] = useState([]);
 
   const fetchExchangeRate = async () => {
     try{
