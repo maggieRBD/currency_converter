@@ -1,6 +1,4 @@
 import { fetchExchangeRate } from '../services/exchangeRateService.js';
-// This file exports functions that handle the business logic for each route. 
-// Each function corresponds to a specific endpoint and processes incoming requests.
 
 export const getExchangeRate = async (req, res) => {
     try {
