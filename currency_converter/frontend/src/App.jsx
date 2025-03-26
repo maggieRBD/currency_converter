@@ -96,9 +96,11 @@ function App() {
 
       {convertedAmount !== null && (
         <div className='result-box'>
-          <h2>Result</h2>
-          <p className='result'>{convertedAmount} {toCurrency}</p>
-          <p className='calculations'>Number of calculations made: {calculations}</p>
+          <h3>Result</h3>
+          <p className='result'>{convertedAmount} <span className='currency'>{toCurrency}</span></p>
+          <div className='divider'></div>
+          <p className='calculations'>Number of calculations made:</p>
+          <p className='count'>{calculations}</p>
         </div>
       )}
     </div>
