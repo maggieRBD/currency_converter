@@ -165,7 +165,7 @@ function App() {
         <div className='saved-conversions'>
           <h2>Saved Conversions</h2>
           <ul>
-            {savedConversions.map((conversion) => (
+            {savedConversions.slice(0,3).map((conversion) => (
               <li key={conversion._id}>
                 <p>{conversion.amount} <span className='currency'>{conversion.fromCurrency}</span> to {conversion.convertedAmount} <span className='currency'>{conversion.toCurrency}</span></p>
                 <p className='date'>{new Date(conversion.date).toLocaleString()}</p>
