@@ -11,23 +11,49 @@ function App() {
   const [error, setError] = useState(null);
   const [calculations, setCalculations] = useState(0);
   const [savedConversions, setSavedConversions] = useState([]);
+  const [currencyUsage, setCurrencyUsage] = useState({});
 
-  const fetchExchangeRate = async () => {
-    try{
-      const response = await fetch(
-        `https://localhost:3000/api/currency?from=${fromCurrency}&to=${toCurrency}`
-      );
-      const data = await response.json();
-
-      if(!data.rate){
-        throw new Error("Nepodarilo se ziskat kurz.")
+  useEffect(() => {
+    const fetchSavedConversions = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/conversions/history`);
+        const data = await response.json();
+        setSavedConversions(data);
+      }catch (error){
+        console.error('Failed to fetch saved conversions.');
       }
+    };
 
-      return data.rate;
-    }catch (err){
-      setError(err.message);
+    fetchSavedConversions();
+  }, []);
+
+  useEffect(() => {
+    const fetchExchangeRate = async () => {
+      try{
+        const response = await fetch(
+          `https://localhost:3000/api/currency?from=${fromCurrency}&to=${toCurrency}`
+        );
+        const data = await response.json();
+
+        if(!data.rate){
+          throw new Error("Could not fetch exchange rate.");
+        }
+
+        return data.rate;
+      }catch (err){
+        setError(err.message);
+        return null;
+      }
+    };
+  
+    fetchExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  const getMostUsedCurrency = () => {
+    if (Object.keys(currencyUsage).length === 0){
       return null;
     }
+    return Object.entries(currencyUsage).reduce((a, b) => (a[1] > b[1] ? a : b))[0];
   };
 
   const handleConvert =  async () => {
@@ -45,11 +71,32 @@ function App() {
       const data = await response.json();
 
       if (data.convertedAmount){
-        console.log(data.convertedAmount);
         setConvertedAmount(data.convertedAmount);
         setCalculations(calculations + 1);
+
+        setCurrencyUsage((prevUsage) => ({
+          ...prevUsage,
+          [toCurrency]: (prevUsage[toCurrency] || 0) + 1
+        }));
+
+        await fetch(`http://localhost:3000/api/conversions/save`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fromCurrency,
+            toCurrency,
+            amount: parseFloat(amount),
+            convertedAmount: data.convertedAmount
+          }),
+        });
+
+        const savedResponse = await fetch(`http://localhost:3000/api/conversions/history`);
+        const savedData = await savedResponse.json();
+        setSavedConversions(savedData);
       }else{
-        throw new Error("Nepodarilo se převést měnu.")
+        throw new Error("Could not convert the currency.");
       }
     }catch (err){
       setError(err.message);
@@ -104,6 +151,29 @@ function App() {
           <p className='count'>{calculations}</p>
         </div>
       )}
+
+      <div className='saved-and-mostly-used'>
+        <div className='mostly-used-currency'>
+          <h2>Mostly used end currency</h2>
+          {getMostUsedCurrency() ? (
+            <p>{getMostUsedCurrency()}</p>
+          ) : (
+            <p>No conversions made yet.</p>
+          )}
+        </div>
+
+        <div className='saved-conversions'>
+          <h2>Saved Conversions</h2>
+          <ul>
+            {savedConversions.map((conversion) => (
+              <li key={conversion._id}>
+                <p>{conversion.amount} <span className='currency'>{conversion.fromCurrency}</span> to {conversion.convertedAmount} <span className='currency'>{conversion.toCurrency}</span></p>
+                <p className='date'>{new Date(conversion.date).toLocaleString()}</p>
+              </li>
+            ))} 
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

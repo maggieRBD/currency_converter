@@ -1,7 +1,8 @@
-import { Conversion } from "../models/conversionModel"; 
+import { Conversion } from '../models/conversionModel.js';
 
 export const saveConversion = async (req, res) => {
     try {
+        console.log(req.body);
         const { fromCurrency, toCurrency, amount, convertedAmount } = req.body;
 
         const newConversion = new Conversion({

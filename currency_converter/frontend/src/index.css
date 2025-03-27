@@ -157,6 +157,26 @@ button{
   color: #000000;
 }
 
+.saved-conversions, .mostly-used-currency{
+  background: #eaecef; 
+  width: 250px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  margin-top: 25px;
+  text-align: left;
+  margin: 50px auto;;
+  color: #000000;
+}
+
+.saved-and-mostly-used{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 25px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #eaecef;
