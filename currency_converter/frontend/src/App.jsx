@@ -40,8 +40,8 @@ function App() {
         }
 
         return data.rate;
-      }catch (err){
-        setError(err.message);
+      }catch (error){
+        setError(error.message);
         return null;
       }
     };
@@ -98,8 +98,8 @@ function App() {
       }else{
         throw new Error("Could not convert the currency.");
       }
-    }catch (err){
-      setError(err.message);
+    }catch (error){
+      setError(error.message);
     }
   };
 

@@ -5,8 +5,8 @@ export const getExchangeRate = async (req, res) => {
         const { from, to } = req.query;
         const rate = await fetchExchangeRate(from, to);
         res.status(200).json({ rate });
-    }catch (err){
-        res.status(500).json({ message: err.message });
+    }catch (error){
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -16,7 +16,7 @@ export const convertCurrency = async (req, res) => {
         const rate = await fetchExchangeRate(from, to);
         const convertedAmount =(amount * rate).toFixed(2);
         res.status(200).json({ convertedAmount });
-    }catch (err){
-        res.status(500).json({ message: err.message });
+    }catch (error){
+        res.status(500).json({ message: error.message });
     }
 };
