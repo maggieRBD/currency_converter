@@ -4,6 +4,12 @@ Applications is running on Vite with React, custom API connected to Open Exchang
 
 ## How to run the application
 
+First, for backend run
+``` npm install express cors dotenv ```
+
+and for frontend run
+``` npm install vite axios ```
+
 Backend is running on port 3000, frontend on port 5173. 
 1. **The first thing to start is the backend in its folder:**
 ```
